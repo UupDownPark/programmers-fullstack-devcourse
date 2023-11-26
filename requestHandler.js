@@ -1,6 +1,6 @@
 function main(response) {
   response.writeHead(200, { "Content-Type": "text/html" });
-  response.write("Main");
+  response.write("Hello Node.js");
   response.end();
 }
 function login(response) {

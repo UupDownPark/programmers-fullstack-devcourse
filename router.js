@@ -1,6 +1,7 @@
 function router(pathname, handle, response) {
-  console.log(pathname);
-  if (typeof handle[response] == "function") {
+  console.log("response" + response);
+
+  if (typeof handle[pathname] == "function") {
     handle[pathname](response);
   } else {
     response.writeHead(404, { "Content-Type": "text/html" });
