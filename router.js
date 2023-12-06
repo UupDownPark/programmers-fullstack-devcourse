@@ -1,8 +1,8 @@
-function router(pathname, handle, response) {
+function router(pathname, handle, response, productId) {
   console.log("response" + response);
 
   if (typeof handle[pathname] == "function") {
-    handle[pathname](response);
+    handle[pathname](response, productId);
   } else {
     response.writeHead(404, { "Content-Type": "text/html" });
     response.write("not found");
