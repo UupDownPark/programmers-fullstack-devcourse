@@ -2,6 +2,7 @@ const mariadb = require("./database/connect/mariadb");
 const fs = require("fs");
 //파일싱크의 약자
 const read_main = fs.readFileSync("./main.html", "utf-8");
+const read_orderlist = fs.readFileSync("./orderlist.html", "utf-8");
 function main(response) {
   mariadb.query("SELECT * FROM product", function (err, rows) {
     console.log(rows);
@@ -47,9 +48,31 @@ function order(response, productId) {
   response.write("orderpage");
   response.end();
 }
+function orderlist(response) {
+  response.writeHead("200", { "Content-Type": "text/html" });
+  mariadb.query("SELECT * FROM orderlist", function (err, rows) {
+    response.write(read_orderlist);
+    rows.forEach((element) => {
+      response.write(
+        "<tr>" +
+          "<td>" +
+          element.id +
+          "</td>" +
+          "<td>" +
+          element.date +
+          "</td>" +
+          "</tr>" +
+          "</tables>"
+      );
+    });
+
+    response.end();
+  });
+}
 let handle = {}; //object
 handle["/"] = main;
 handle["/order"] = order;
+handle["/orderlist"] = orderlist;
 /* image directory*/
 handle["/img/redRacket.png"] = redRacket;
 handle["/img/blueRacket.png"] = blueRacket;
